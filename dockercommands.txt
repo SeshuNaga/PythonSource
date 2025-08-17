@@ -1,0 +1,25 @@
+# docker build comamnd
+
+docker build -t <image_name>:<tag> <path_to_dockerfile>.  docker build -t python-app:1.0 .
+
+# After build docker iamge to run the image as conatainer
+
+docker run -d --name myapp_container my-python-app:1.0(iamge name)
+
+to expose port on docker iamges
+
+docker run -d -p 8080:80 --name myapp_container my-python-app:1.0
+ 
+
+ 8080 --outside , 80 --inside
+
+ docker stop ad10c13e94f8(container ID)
+
+
+ docker ps--- to check the service is up or not
+
+ docker exec -it myapp_container /bin/bash
+
+
+
+
