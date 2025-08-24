@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/SeshuNaga/ansibleForPythonProject.git'
+                git branch: 'main', url: 'https://github.com/SeshuNaga/PythonSource.git'
             }
         }
 
