@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-              sh 'docker build -f PythonSource/Dockerfile -t my-python-app PythonSource/'
+              sh 'docker build -t my-python-app .'
             }
         }
     }
