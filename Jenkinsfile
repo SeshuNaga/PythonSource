@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "127.0.0.1:5000"
+        REGISTRY = "localhost:5000"
         IMAGE_NAME = "my-python-app"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
     }
 
     stages {
@@ -16,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:latest ."
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
                 }
             }
         }
@@ -24,6 +25,7 @@ pipeline {
         stage('Tag Image for Local Registry') {
             steps {
                 script {
+                    sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:latest"
                 }
             }
@@ -32,6 +34,7 @@ pipeline {
         stage('Push to Local Registry') {
             steps {
                 script {
+                    sh "docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
                 }
             }
