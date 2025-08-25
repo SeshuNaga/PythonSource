@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     // Example: if you have a VERSION file in repo
-                    VERSION = readFile('VERSION').trim()
+                    VERSION = readFile('version').trim()
 
                    
 
