@@ -2,43 +2,38 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "127.0.0.1:8083"
-        APP_NAME = "afo/ke/prod/bulk-upload-service"
+        REGISTRY = "localhost:5000"
+        IMAGE_NAME = "my-python-app"
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/SeshuNaga/PythonSource.git'
             }
         }
 
-        stage('Read Version') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Example: if you have a VERSION file in repo
-                    VERSION = readFile('version').trim()
-
-                   
-
-                    echo "Using version: ${VERSION}"
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Tag Image for Local Registry') {
             steps {
-                sh '''
-                docker build -t $REGISTRY/$APP_NAME:$VERSION .
-                '''
+                script {
+                    sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:latest"
+                }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push to Local Registry') {
             steps {
-                sh '''
-                docker push $REGISTRY/$APP_NAME:$VERSION
-                '''
+                script {
+                    sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
+                }
             }
         }
     }
