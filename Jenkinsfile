@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "localhost:5000"
+        REGISTRY = "127.0.0.1:5000"
         IMAGE_NAME = "my-python-app"
     }
 
