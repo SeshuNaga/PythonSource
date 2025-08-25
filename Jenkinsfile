@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "127.0.0.0:8083"
+        REGISTRY = "127.0.0.1:8083"
         APP_NAME = "afo/ke/prod/bulk-upload-service"
     }
 
